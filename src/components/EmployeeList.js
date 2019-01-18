@@ -4,8 +4,10 @@ import { connect } from 'react-redux';
 import { FlatList } from 'react-native';
 import { employeesFetch } from '../actions';
 import ListItem from './ListItem';
+import { Spinner } from './common';
 
 class EmployeeList extends Component {
+
 	componentDidMount() {
 		this.props.employeesFetch();
 	}
@@ -15,6 +17,10 @@ class EmployeeList extends Component {
 	}
 
 	render() {
+		if (!this.props.loaded) {
+			return <Spinner size="large" />;
+		}
+
 		return (
 			<FlatList
 				data={this.props.employees}
@@ -26,11 +32,11 @@ class EmployeeList extends Component {
 }
 
 const mapStateToProps = state => {
-	const employees = _.map(state.employees, (val, uid) => {
+	const employees = _.map(state.employees.data, (val, uid) => {
 		return { ...val, uid };
 	});
 
-	return { employees };
+	return { employees, loaded: state.employees.loaded };
 };
 
 export default connect(mapStateToProps, { employeesFetch })(EmployeeList);
