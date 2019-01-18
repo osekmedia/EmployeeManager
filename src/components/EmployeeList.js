@@ -1,41 +1,25 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ListView } from 'react-native';
+import { FlatList } from 'react-native';
 import { employeesFetch } from '../actions';
 import ListItem from './ListItem';
 
 class EmployeeList extends Component {
-	componentWillMount() {
+	componentDidMount() {
 		this.props.employeesFetch();
-
-		this.createDataSource(this.props);
 	}
 
-	componentWillReceiveProps(nextProps) {
-		//nextProps is the next set of props the component will be rendered with
-		//this.props still holds old props
-		this.createDataSource(nextProps);
-	}
-
-	createDataSource({ employees }) {
-		const ds = new ListView.DataSource({
-			rowHasChanged: (r1, r2) => r1 !== r2
-		});
-
-		this.dataSource = ds.cloneWithRows(employees);
-	}
-
-	renderRow(employee) {
-		return <ListItem employee={employee} />;
+	renderItem(employee) {
+		return <ListItem employee={employee.item} />;
 	}
 
 	render() {
 		return (
-			<ListView 
-				enableEmpySections
-				dataSource={this.dataSource}
-				renderRow={this.renderRow}
+			<FlatList
+				data={this.props.employees}
+				renderItem={this.renderItem}
+				keyExtractor={employee => employee.uid}
 			/>
 		);
 	}
@@ -43,7 +27,7 @@ class EmployeeList extends Component {
 
 const mapStateToProps = state => {
 	const employees = _.map(state.employees, (val, uid) => {
-		return {...val, uid };
+		return { ...val, uid };
 	});
 
 	return { employees };
