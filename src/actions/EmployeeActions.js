@@ -5,7 +5,8 @@ import {
 	EMPLOYEE_CREATE, 
 	EMPLOYEES_FETCH_SUCCESS,
 	EMPLOYEE_SAVE_SUCCESS,
-	EDIT_CANCEL
+	EDIT_CANCEL,
+	CREATE_CANCEL
 } from './types';
 
 export const employeeUpdate = ({ prop, value }) => {
@@ -77,3 +78,9 @@ export const editCancel = () => {
     type: EDIT_CANCEL
   };
 };
+
+export const createCancel = () => {
+  return {
+    type: CREATE_CANCEL
+  };
+ };

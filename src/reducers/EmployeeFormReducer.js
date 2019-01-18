@@ -2,7 +2,8 @@ import {
 	EMPLOYEE_UPDATE, 
 	EMPLOYEE_CREATE, 
 	EMPLOYEE_SAVE_SUCCESS,
-	EDIT_CANCEL
+	EDIT_CANCEL,
+	CREATE_CANCEL
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -18,6 +19,8 @@ export default (state = INITIAL_STATE, action) => {
 		case EMPLOYEE_SAVE_SUCCESS:
 			return INITIAL_STATE;
 		case EDIT_CANCEL:
+			return INITIAL_STATE;
+		case CREATE_CANCEL:
 			return INITIAL_STATE;
 		case EMPLOYEE_UPDATE:
 			//action.payload === {prop: 'name', value: 'jane'}
